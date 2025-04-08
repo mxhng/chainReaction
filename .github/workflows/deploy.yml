@@ -32,6 +32,3 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "build/*"
           target: ${{ secrets.SSH_DEST_DIR }}
-
-      - name: Restart Apache
-        run: ssh -i ${{ secrets.SSH_PRIVATE_KEY }} ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} 'sudo systemctl restart apache2'

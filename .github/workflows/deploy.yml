@@ -24,6 +24,9 @@ jobs:
       - name: Build React App
         run: npm run build
 
+      - name: Ensure target directory exists
+        run: ssh -i ${{ secrets.SSH_PRIVATE_KEY }} ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} 'mkdir -p ${{ secrets.SSH_DEST_DIR }}'
+
       - name: Deploy to Server via SSH
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -32,3 +35,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "build/*"
           target: ${{ secrets.SSH_DEST_DIR }}
+
+      - name: Restart Apache
+        run: ssh -i ${{ secrets.SSH_PRIVATE_KEY }} ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} 'sudo systemctl restart apache2'

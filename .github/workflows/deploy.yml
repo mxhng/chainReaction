@@ -3,7 +3,7 @@ name: Deploy React App via SSH
 on:
   push:
     branches:
-      - hosting # or 'deploy' or whatever branch you use
+      - hosting
 
 jobs:
   build-and-deploy:
@@ -30,5 +30,6 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "build/*"
+          source: "build"
           target: ${{ secrets.SSH_DEST_DIR }}
+          strip_components: 1
